@@ -56,6 +56,7 @@ async function input(RED, node, data, config) {
     switch (action) {
       case "list":
         let filter = resolveParameter("filter");
+        console.log("filter ", filter);
         results = await listRecords(airtableBase, table, filter);
         break;
       case "get":
@@ -196,7 +197,6 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 }
 
 function cleanRecords(records) {
-  return "{}"
   if (records.length) {
     let results = [];
     records.forEach(function (record) {
