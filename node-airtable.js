@@ -70,6 +70,7 @@ async function input(RED, node, data, config) {
         break;
       case "put":
         let recordsData = resolveParameter("records");
+        console.log("records", recordsData);
         results = await putRecords(airtableBase, table, recordsData);
         break;
       case "delete":
