@@ -196,8 +196,7 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 }
 
 function cleanRecords(records) {
-  return "{}";
-  if (records && records.length) {
+  if (records.length) {
     let results = [];
     records.forEach(function (record) {
       results.push({
