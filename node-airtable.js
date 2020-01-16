@@ -51,7 +51,6 @@ async function input(RED, node, data, config) {
     let action = config.action;
     let table = resolveParameter("table");
     if (!table) throw "Table label missing";
-    throw "Table label missing";
     console.log("[ Airtable ] action: ", action);
     switch (action) {
       case "list":
