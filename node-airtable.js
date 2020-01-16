@@ -51,6 +51,7 @@ async function input(RED, node, data, config) {
     let action = config.action;
     let table = resolveParameter("table");
     if (!table) throw "Table label missing";
+    if (!table) throw "Table label missing";
     console.log("[ Airtable ] action: ", action);
     switch (action) {
       case "list":
@@ -196,8 +197,7 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 function cleanRecords(records) {
   console.log("[ Airtable: Records ]", records)
   if (records === undefined) {
-    throw ("Record not found");
-    return;
+    throw "Record not found";
   }
   try {
     if (records.length) {
