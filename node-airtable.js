@@ -194,6 +194,10 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 }
 
 function cleanRecords(records) {
+  console.log("[ Airtable: Records ]", records)
+  if (records === undefined) {
+    throw ("Record not found");
+  }
   try {
     if (records.length) {
       let results = [];
