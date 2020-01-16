@@ -197,6 +197,7 @@ function cleanRecords(records) {
   console.log("[ Airtable: Records ]", records)
   if (records === undefined) {
     throw ("Record not found");
+    return;
   }
   try {
     if (records.length) {
