@@ -212,6 +212,6 @@ function cleanRecords(records) {
       return record;
     }
   } catch (err) {
-    trrow(err);
+    throw (err);
   }
 }
