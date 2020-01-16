@@ -51,12 +51,10 @@ async function input(RED, node, data, config) {
     let action = config.action;
     let table = resolveParameter("table");
     if (!table) throw "Table label missing";
-    console.log("action", action);
-    console.log("table", table);
+    console.log("[ Airtable ] action: ", action);
     switch (action) {
       case "list":
         let filter = resolveParameter("filter");
-        console.log("filter ", filter);
         results = await listRecords(airtableBase, table, filter);
         break;
       case "get":
@@ -65,12 +63,10 @@ async function input(RED, node, data, config) {
         break;
       case "post":
         let recordData = resolveParameter("record");
-        console.log("recordData", recordData);
         results = await createRecords(airtableBase, table, recordData);
         break;
       case "put":
         let recordsData = resolveParameter("records");
-        console.log("records", recordsData);
         results = await putRecords(airtableBase, table, recordsData);
         break;
       case "delete":
@@ -198,20 +194,24 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 }
 
 function cleanRecords(records) {
-  if (records.length) {
-    let results = [];
-    records.forEach(function (record) {
-      results.push({
-        id: record.id,
-        fields: record.fields
+  try {
+    if (records.length) {
+      let results = [];
+      records.forEach(function (record) {
+        results.push({
+          id: record.id,
+          fields: record.fields
+        });
       });
-    });
-    return results;
-  } else {
-    let record = {
-      id: records.id,
-      fields: records.fields
-    };
-    return record;
+      return results;
+    } else {
+      let record = {
+        id: records.id,
+        fields: records.fields
+      };
+      return record;
+    }
+  } catch (err) {
+    trrow(err);
   }
 }
