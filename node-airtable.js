@@ -196,7 +196,6 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
 }
 
 function cleanRecords(records) {
-  records = undefined;
   if (records === undefined) {
     return {};
   }
