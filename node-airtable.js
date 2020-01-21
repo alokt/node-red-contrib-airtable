@@ -4,8 +4,8 @@ const helper = require("node-red-viseo-helper");
 //  NODE-RED
 // --------------------------------------------------------------------------
 
-module.exports = function (RED) {
-  const register = function (config) {
+module.exports = function(RED) {
+  const register = function(config) {
     RED.nodes.createNode(this, config);
     let node = this;
 
@@ -73,9 +73,12 @@ async function input(RED, node, data, config) {
         let recordsIds = resolveParameter("records");
         if (!recordsIds.length || recordsIds.length < 10) {
           results = await deleteRecords(airtableBase, table, recordsIds);
-        }
-        else {
-          results = await deleteArraysOfRecords(airtableBase, table, recordsIds);
+        } else {
+          results = await deleteArraysOfRecords(
+            airtableBase,
+            table,
+            recordsIds
+          );
         }
         break;
     }
@@ -117,7 +120,7 @@ async function listRecords(airtable, table, filter) {
 async function getRecord(airtable, table, recordId) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).find(recordId, function (err, record) {
+      airtable(table).find(recordId, function(err, record) {
         if (err) reject(err);
         record = cleanRecords(record);
         resolve(record);
@@ -131,7 +134,7 @@ async function getRecord(airtable, table, recordId) {
 async function createRecords(airtable, table, recordData) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).create(recordData, function (err, records) {
+      airtable(table).create(recordData, function(err, records) {
         if (err) reject(err);
         records = cleanRecords(records);
         resolve(records);
@@ -145,7 +148,7 @@ async function createRecords(airtable, table, recordData) {
 async function putRecords(airtable, table, recordsData) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).update(recordsData, function (err, records) {
+      airtable(table).update(recordsData, function(err, records) {
         if (err) reject(err);
         records = cleanRecords(records);
         resolve(records);
@@ -159,7 +162,7 @@ async function putRecords(airtable, table, recordsData) {
 async function deleteRecords(airtable, table, recordsIds) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).destroy(recordsIds, function (err, deletedRecords) {
+      airtable(table).destroy(recordsIds, function(err, deletedRecords) {
         if (err) reject(err);
         deletedRecords = cleanRecords(deletedRecords);
         resolve(deletedRecords);
@@ -183,22 +186,24 @@ async function deleteArraysOfRecords(airtable, table, recordsIds) {
       }
     }
     for (let array of arrayOfRecordsIds) {
-
       let res = await deleteRecords(airtable, table, array);
       results.push(res);
     }
     return results;
   } catch (err) {
-    throw (err)
+    throw err;
   }
 }
 
 function cleanRecords(records) {
-
+  records = undefined;
+  if (records === undefined) {
+    return {};
+  }
   try {
     if (records.length) {
       let results = [];
-      records.forEach(function (record) {
+      records.forEach(function(record) {
         results.push({
           id: record.id,
           fields: record.fields
@@ -213,6 +218,6 @@ function cleanRecords(records) {
       return record;
     }
   } catch (err) {
-    throw (err);
+    throw err;
   }
 }
