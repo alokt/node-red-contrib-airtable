@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/NGRP/node-red-contrib-viseo/tree/master/node-red-contrib-airtable"
+    "url": "https://github.com/alokt/node-red-contrib-airtable"
   },
   "license": "Apache-2.0",
   "keywords": [
