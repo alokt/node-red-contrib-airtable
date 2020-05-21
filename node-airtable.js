@@ -4,8 +4,8 @@ const helper = require("node-red-viseo-helper");
 //  NODE-RED
 // --------------------------------------------------------------------------
 
-module.exports = function(RED) {
-  const register = function(config) {
+module.exports = function (RED) {
+  const register = function (config) {
     RED.nodes.createNode(this, config);
     let node = this;
 
@@ -51,7 +51,6 @@ async function input(RED, node, data, config) {
     let action = config.action;
     let table = resolveParameter("table");
     if (!table) throw "Table label missing";
-    console.log("[ Airtable ] action: ", action);
     switch (action) {
       case "list":
         let filter = resolveParameter("filter");
@@ -120,7 +119,7 @@ async function listRecords(airtable, table, filter) {
 async function getRecord(airtable, table, recordId) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).find(recordId, function(err, record) {
+      airtable(table).find(recordId, function (err, record) {
         if (err) reject(err);
         record = cleanRecords(record);
         resolve(record);
@@ -134,7 +133,7 @@ async function getRecord(airtable, table, recordId) {
 async function createRecords(airtable, table, recordData) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).create(recordData, function(err, records) {
+      airtable(table).create(recordData, function (err, records) {
         if (err) reject(err);
         records = cleanRecords(records);
         resolve(records);
@@ -148,7 +147,7 @@ async function createRecords(airtable, table, recordData) {
 async function putRecords(airtable, table, recordsData) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).update(recordsData, function(err, records) {
+      airtable(table).update(recordsData, function (err, records) {
         if (err) reject(err);
         records = cleanRecords(records);
         resolve(records);
@@ -162,7 +161,7 @@ async function putRecords(airtable, table, recordsData) {
 async function deleteRecords(airtable, table, recordsIds) {
   return new Promise((resolve, reject) => {
     try {
-      airtable(table).destroy(recordsIds, function(err, deletedRecords) {
+      airtable(table).destroy(recordsIds, function (err, deletedRecords) {
         if (err) reject(err);
         deletedRecords = cleanRecords(deletedRecords);
         resolve(deletedRecords);
@@ -202,7 +201,7 @@ function cleanRecords(records) {
   try {
     if (records.length) {
       let results = [];
-      records.forEach(function(record) {
+      records.forEach(function (record) {
         results.push({
           id: record.id,
           fields: record.fields
